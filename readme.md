@@ -36,6 +36,18 @@ Ky targets [modern browsers](#browser-support). For older browsers, you will nee
 $ npm install ky
 ```
 
+###### Download
+
+- [Normal](https://cdn.jsdelivr.net/npm/ky/index.js)
+- ~~[Minified](https://cdn.jsdelivr.net/npm/ky/index.min.js)~~<br><sup>(Blocked by [jsdelivr/jsdelivr#18043](https://github.com/jsdelivr/jsdelivr/issues/18043))</sup>
+
+###### CDN
+
+- [jsdelivr](https://www.jsdelivr.com/package/npm/ky)
+- [unpkg](https://unpkg.com/ky)
+
+---
+
 <a href="https://www.patreon.com/sindresorhus">
 	<img src="https://c5.patreon.com/external/logo/become_a_patron_button@2x.png" width="160">
 </a>
@@ -104,11 +116,27 @@ Sets `options.method` to the method name and makes a request.
 
 Type: `Object`
 
+##### method
+
+Type: `string`
+Default: `get`
+
+HTTP method used to make the request.
+
+Internally, the standard methods (`GET`, `POST`, `PUT`, `PATCH`, `HEAD` and `DELETE`) are uppercased in order to avoid server errors due to case sensitivity.
+
 ##### json
 
 Type: `Object`
 
 Shortcut for sending JSON. Use this instead of the `body` option. Accepts a plain object which will be `JSON.stringify()`'d and the correct header will be set for you.
+
+##### searchParams
+
+Type: `string` `Object<string, string|number>` `URLSearchParams`<br>
+Default: `''`
+
+Search parameters to include in the request URL. Setting this will override all existing search parameters in the input URL.
 
 ##### prefixUrl
 
@@ -287,6 +315,24 @@ It's just a random short npm package name I managed to get. It does, however, ha
 
 > A form of text-able slang, KY is an abbreviation for 空気読めない (kuuki yomenai), which literally translates into “cannot read the air.” It's a phrase applied to someone who misses the implied meaning.
 
+#### How do I use this without a bundler like Webpack?
+
+Upload the [`index.js`](index.js) file in this repo somewhere, for example, to your website server, or use a CDN version. Then import the file.
+
+```html
+<script type="module">
+// Replace the version number with the latest version
+import ky from 'https://cdn.jsdelivr.net/npm/ky@0.5.2/index.js';
+
+(async () => {
+	const json = await ky('https://jsonplaceholder.typicode.com/todos/1').json();
+
+	console.log(json.title);
+	//=> 'delectus aut autem
+})();
+</script>
+```
+
 
 ## Browser support
 
@@ -302,6 +348,7 @@ The latest version of Chrome, Firefox, and Safari.
 
 - [Sindre Sorhus](https://github.com/sindresorhus)
 - [Szymon Marczak](https://github.com/szmarczak)
+- [Seth Holladay](https://github.com/sholladay)
 
 
 ## License
